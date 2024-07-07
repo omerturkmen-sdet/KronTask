@@ -9,9 +9,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "src/test/resources/features",
         glue = "steps",
-        tags = "@new",
-        //plugin = {"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"},
-        dryRun = false
+        tags = "@runnn"
 )
 public class TestRunner {
     @AfterClass

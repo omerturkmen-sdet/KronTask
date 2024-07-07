@@ -10,23 +10,38 @@ import utis.Driver;
 import java.time.Duration;
 
 public class BasePage {
-    WebDriverWait wait;
+    WebDriverWait wait = new WebDriverWait(Driver.get(), Duration.ofSeconds(8));
 
     public BasePage() {
         PageFactory.initElements(Driver.get(), this);
-        wait = new WebDriverWait(Driver.get(), Duration.ofSeconds(8));
-    }
-
-    public void click(WebElement element){
-        wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+        waitForPageLoad();
     }
 
     public String getText(WebElement element){
+        scroll(element);
         return wait.until(ExpectedConditions.visibilityOf(element)).getText();
     }
 
     public void clickWithJS(WebElement element) {
+        scroll(element);
         JavascriptExecutor jse = (JavascriptExecutor)Driver.get();
         jse.executeScript("arguments[0].click();", element);
+    }
+
+    public void scroll(WebElement element) {
+        ((JavascriptExecutor)Driver.get()).executeScript("arguments[0].scrollIntoView({block: \"center\",inline: \"center\",behavior: \"smooth\"});",element);
+    }
+
+    public void wait(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000L);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void waitForPageLoad() {
+        wait.until(webDriver -> "complete".equals(((JavascriptExecutor) webDriver)
+                .executeScript("return document.readyState")));
     }
 }

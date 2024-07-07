@@ -10,11 +10,10 @@ import utis.ConfigReader;
 import utis.Driver;
 
 public class StepDefinitions extends BaseTest{
-    private HomePage homePage;
-    private SearchResultPage searchResultPage;
     private String searchKey;
-    private ProductPage productPage;
     private SearchResultPage.Product selectedProduct;
+    private String productCode;
+    private String productPrice;
 
     @Given("User navigates home page")
     public void user_navigates_home_page() {
@@ -58,9 +57,42 @@ public class StepDefinitions extends BaseTest{
         productPage = new ProductPage();
     }
 
-
     @And("Verify that product info are match with the previous page")
     public void verifyThatProductInfoAreMatchWithThePreviousPage() {
         Assert.assertEquals(selectedProduct.getInfo(), productPage.getProductInfo());
+    }
+
+    @When("User selects one of the available size option")
+    public void userSelectsOneOfTheAvailableSizeOption() {
+        productPage.selectProductSize();
+    }
+
+    @And("User adds product to cart")
+    public void userAddsProductToCart() {
+        productCode = productPage.getProductCode();
+        productPrice = productPage.getProductPrice();
+        productPage.addToCart();
+    }
+
+    @And("Verify that add to cart button text is changed as {string}")
+    public void verifyThatAddToCartButtonTextIsChangedAs(String expectedText) {
+        Assert.assertEquals(expectedText, productPage.getAddToCartBtnText());
+    }
+
+    @Then("Verify that cart have {string} product")
+    public void verifyThatCartHaveProduct(String productCount) {
+        Assert.assertEquals(productCount, productPage.navigationBar.getProductCountAtCart());
+    }
+
+    @When("User navigates cart page")
+    public void userNavigatesCartPage() {
+        Driver.get().get("https://www.lcw.com/sepetim");
+        cartPage = new CartPage();
+    }
+
+    @Then("Verify that product info are match on the cart page")
+    public void verifyThatProductInfoAreMatchOnTheCartPage() {
+        Assert.assertEquals(cartPage.getProductPrice(), productPrice);
+        Assert.assertEquals(cartPage.getProductCode(), productCode);
     }
 }

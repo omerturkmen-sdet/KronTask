@@ -1,14 +1,23 @@
 package pages;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class ProductPage extends BasePage{
+
+    public ProductPage() {
+        navigationBar = new NavigationBar();
+        clickWithJS(productTitle);
+    }
+
+    public NavigationBar navigationBar;
+
+    @FindBy(css = ".title-info .product-code")
+    private WebElement productCode;
 
     @FindBy(css = ".info-panel .product-title")
     private WebElement productTitle;
@@ -41,22 +50,24 @@ public class ProductPage extends BasePage{
         return getText(sellerName);
     }
 
-    public void selectRandomProductSize() {
-
+    public String getProductCode() {
+        String[] split = getText(productCode).trim().replace("Ürün Kodu:\n", "").split(" - ");
+        return split[0] + " - " + split[1];
     }
 
-    //TODO: Var olan sayıdan daha fazla element gözüküyor bunu kontrol et önce
-    public void getProductSizes() {
-        for (WebElement element : sizeOptionListWithStock) {
-            System.out.println(element.getText());
-        }
+    public void selectProductSize() {
+        clickWithJS(
+                sizeOptionListWithStock.get(
+                new Random().nextInt(sizeOptionListWithStock.size()
+                )));
     }
-
-    //TODO: Beden seçmeden sepete ekleme
-    //TODO: Beden seçtikten sonra sepete ekleme
 
     public void addToCart() {
-        click(addToCartBtn);
+        clickWithJS(addToCartBtn);
+        wait.until(driver -> {
+            String readyState = getText(addToCartBtn);
+            return "SEPETE EKLENDİ".equals(readyState) || "LÜTFEN BEDEN SEÇİNİZ".equals(readyState);
+        });
     }
 
     public String getAddToCartBtnText() {

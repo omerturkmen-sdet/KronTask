@@ -29,6 +29,9 @@ public class SearchResultPage extends BasePage{
     @FindBy(css = ".product-card .product-price")
     private List<WebElement> productPriceList;
 
+    @FindBy(css = ".like-indicator")
+    private List<WebElement> addFavoriteBtns;
+
     public boolean isRecommendedProductsDisplayed() {
         return recommendedProductLabel.isDisplayed();
     }
@@ -42,20 +45,14 @@ public class SearchResultPage extends BasePage{
         return Collections.singletonMap(productsList.get(index), index);
     }
 
-    private WebElement getProductElement(int index) {
-        //TODO: null yerine invalid search exception at
-        if (productsList.isEmpty()) return null;
-        return index >= productsList.size() ? productsList.get(0) : productsList.get(index);
-    }
-
     public void selectProduct() {
         clickWithJS(product.getElement());
         //TODO: Product page return et
     }
 
     public void getRandomProduct() {
-        int index = new Random().nextInt(productsList.size());
-        product = new Product(index);
+        product = productsList.isEmpty() ? null :
+                new Product(new Random().nextInt(productsList.size()));
     }
 
     @Getter
@@ -65,7 +62,8 @@ public class SearchResultPage extends BasePage{
         private final String brandTitle;
         private final String title;
         private final String price;
-        private final Map<String,String> info = new HashMap<>();
+        private Map<String,String> info = new HashMap<>();
+
         public Product(int index) {
             this.index = index;
             element = productsList.get(index);

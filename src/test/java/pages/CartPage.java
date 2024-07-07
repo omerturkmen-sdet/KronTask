@@ -1,6 +1,5 @@
 package pages;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -9,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 public class CartPage extends BasePage{
+
+    @FindBy(css = ".rd-cart-item-code")
+    private WebElement productCode;
 
     @FindBy(css = ".rd-cart-item-price")
     private WebElement productPrice;
@@ -31,4 +33,11 @@ public class CartPage extends BasePage{
         return orderSummary;
     }
 
+    public String getProductCode() {
+        return getText(productCode);
+    }
+
+    public String getProductPrice() {
+        return getText(productPrice);
+    }
 }
