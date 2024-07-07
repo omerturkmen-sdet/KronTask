@@ -1,13 +1,12 @@
 package pages;
 
-import org.openqa.selenium.WebDriver;
+import org.junit.Assert;
 
-public class HomePage extends BasePage{
-    public HomePage(WebDriver driver) {
-        super(driver);
-        navigationBar = new NavigationBar(driver);
+public class HomePage extends BasePage {
+    public HomePage() {
+        navigationBar = new NavigationBar();
     }
 
-    NavigationBar navigationBar;
-
+    public NavigationBar navigationBar;
 }
+

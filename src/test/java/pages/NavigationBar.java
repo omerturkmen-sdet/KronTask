@@ -1,20 +1,19 @@
 package pages;
 
-import org.junit.jupiter.api.Assertions;
+import org.junit.Assert;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 public class NavigationBar extends BasePage{
-    public NavigationBar(WebDriver driver) {
-        super(driver);
+    public NavigationBar() {
         check();
     }
 
     private void check() {
-        Assertions.assertTrue(logo.isDisplayed());
-        Assertions.assertTrue(searchField.isDisplayed());
+        Assert.assertTrue(logo.isDisplayed());
+        Assert.assertTrue(searchField.isDisplayed());
     }
 
     @FindBy(css = ".main-header-logo")

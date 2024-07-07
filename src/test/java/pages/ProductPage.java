@@ -4,13 +4,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductPage extends BasePage{
-
-    public ProductPage(WebDriver driver) {
-        super(driver);
-    }
 
     @FindBy(css = ".info-panel .product-title")
     private WebElement productTitle;
@@ -33,6 +31,10 @@ public class ProductPage extends BasePage{
 
     public String getProductPrice() {
         return getText(productPrice);
+    }
+
+    public Map<String, String> getProductInfo() {
+        return Map.of(getProductTitle(), getProductPrice());
     }
 
     public String getSellerName() {

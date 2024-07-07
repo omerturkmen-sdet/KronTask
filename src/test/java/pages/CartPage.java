@@ -10,10 +10,6 @@ import java.util.Map;
 
 public class CartPage extends BasePage{
 
-    public CartPage(WebDriver driver) {
-        super(driver);
-    }
-
     @FindBy(css = ".rd-cart-item-price")
     private WebElement productPrice;
 
