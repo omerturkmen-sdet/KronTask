@@ -6,6 +6,8 @@
 - Adding Product to Cart
 - Adding Product to Favorites
 
+- All scenarios tested on LCW website
+
 ### About Project
 
 - Programming Language: Java
