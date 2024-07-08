@@ -6,7 +6,6 @@
 - Adding Product to Cart
 - Adding Product to Favorites
 
-- All scenarios tested on LCW website
 
 ### About Project
 
@@ -15,3 +14,8 @@
 - Tools: Selenium, JUnit, Cucumber, Gherkin
 - Reporting: ExtentReport
 - Version Control: Git
+
+
+#### Test Website
+
+- All scenarios tested on [LCW](https://www.lcw.com) website
