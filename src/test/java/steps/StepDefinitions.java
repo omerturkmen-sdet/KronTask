@@ -24,7 +24,7 @@ public class StepDefinitions extends BaseTest{
 
     @When("User searches {string} on search bar")
     public void userSearchesOnSearchBar(String searchKey) {
-        extentTest.log(extentTest.getStatus(), "asd");
+        extentTest.log(extentTest.getStatus(), String.format("User searches %s on search bar", searchKey));
         this.searchKey = searchKey;
         homePage.navigationBar.searchProduct(searchKey);
     }
